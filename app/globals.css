@@ -1,26 +1,265 @@
-@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600;700&display=swap");
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@import "tailwindcss";
+@import "@heroui/styles";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------
+   Theme Definitions & Semantic Variables (Trailwisp Palette)
+   --------------------------------------------------------------------- */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Trailwisp Light Base Tokens */
+  --background: oklch(99.33% 0.014 111.02); /* Sand Base */
+  --foreground: oklch(0.36 0.04 253.57);   /* Slate Text */
+
+  --muted-foreground: oklch(0.53 0.03 254.21);
+  --border: oklch(0.94 0.01 250.0);
+
+  /* Accent Branding Tokens */
+  --brand-teal: oklch(0.57 0.14 186.29);   /* #0d9488 */
+  --brand-orange: oklch(0.66 0.21 42.75);  /* #f97316 */
+  --brand-sand: oklch(0.99 0.014 111.02);  /* #fdfbf7 */
+  --brand-slate: oklch(0.36 0.04 253.57);  /* #334155 */
+
+  /* Extra Surface Structural Tokens */
+  --card-bg: oklch(1.0 0 0);               /* Crisp Solid White */
+  --card-hover-bg: color-mix(in oklch, var(--brand-sand) 95%, var(--brand-orange) 5%);
+  --background-secondary: color-mix(in oklch, var(--background) 96%, var(--brand-teal) 4%);
+  
+  --glass-bg: color-mix(in oklch, white 70%, transparent);
+
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
 }
 
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Trailwisp Dark Base Tokens */
+  --background: oklch(0.17 0.03 257.65);   /* Dark Slate Deep #0f172a */
+  --foreground: oklch(0.97 0.01 256.85);   /* Off-white Text #f8fafc */
+
+  --muted-foreground: oklch(0.69 0.02 254.3);
+  --border: oklch(0.36 0.04 253.57);       /* #334155 */
+
+  /* Accent Branding Tokens */
+  --brand-teal: oklch(0.79 0.13 186.0);    /* Vibrant Dark Teal #2dd4bf */
+  --brand-orange: oklch(0.72 0.20 42.0);
+  --brand-sand: oklch(0.25 0.03 255.0);
+  --brand-slate: oklch(0.97 0.01 256.85);
+
+  /* Extra Surface Structural Tokens */
+  --card-bg: oklch(0.25 0.03 254.6);       /* Slate Dark Base #1e293b */
+  --card-hover-bg: color-mix(in oklch, var(--card-bg) 92%, white 8%);
+  --background-secondary: color-mix(in oklch, var(--background) 93%, var(--brand-teal) 7%);
+
+  --glass-bg: color-mix(in oklch, black 40%, transparent);
+
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --card-shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------------------------------------------------------------------
+   Tailwind Engine Theme Mapping
+   --------------------------------------------------------------------- */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-sand: var(--brand-sand);
+  --color-brand-slate: var(--brand-slate);
+
+  --font-display: "Fraunces", ui-serif, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Scrollbars Accent Integration */
+:root {
+  --scrollbar-thumb: color-mix(in oklch, var(--brand-teal) 45%, transparent);
+}
+
+/* ---------------------------------------------------------------------
+   Base Elements Setup
+   --------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-brand-teal/20;
+    font-family: var(--font-sans);
+    transition: background-color 0.3s ease, color 0.2s ease;
+
+    /* Seamless Fixed Background Gradient Grids */
+    background-image:
+      radial-gradient(
+        circle at top left,
+        color-mix(in oklch, var(--brand-teal) 8%, transparent),
+        transparent 38%
+      ),
+      radial-gradient(
+        circle at bottom right,
+        color-mix(in oklch, var(--brand-orange) 6%, transparent),
+        transparent 40%
+      );
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    @apply tracking-tight text-balance;
+  }
+
+  img, video {
+    @apply select-none pointer-events-none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------------------------------------------------------------------
+   Components Layer
+   --------------------------------------------------------------------- */
+@layer components {
+  /* Layout App Wrapper */
+  .container-app {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Global UI Clean Unified Cards (Merged System Styles) */
+  .trailwisp-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .trailwisp-card:hover {
+    background: var(--card-hover-bg);
+    border-color: color-mix(in oklch, var(--brand-teal) 35%, var(--border));
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-4px);
+  }
+
+  /* Glassmorphism Structural Cards */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid color-mix(in oklch, var(--border) 75%, white 25%);
+    border-radius: 1.25rem;
+    box-shadow: var(--card-shadow);
+  }
+
+  /* Muted Accent Sections Layout */
+  .section-muted {
+    background: var(--background-secondary);
+    border-radius: 2rem;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Navbar Scrolling News Ticker (Marquee Animation)
+   --------------------------------------------------------------------- */
+.ticker-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: oklch(0.17 0.03 257.65); /* Keeps pure modern deep dark contrast background */
+  color: #ffffff;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ticker-wrap {
+  display: inline-block;
+  padding-left: 100%;
+  animation: ticker 25s linear infinite;
+}
+
+.ticker-item {
+  display: inline-block;
+  padding: 0 2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.ticker-item:hover {
+  color: var(--brand-orange);
+}
+
+.ticker-container:hover .ticker-wrap {
+  animation-play-state: paused;
+}
+
+@keyframes ticker {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Hero Overlays & System Form Inputs Fixes
+   --------------------------------------------------------------------- */
+.hero-gradient-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0.3) 0%,
+    rgba(15, 23, 42, 0.7) 100%
+  );
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+.dark input[type="date"]::-webkit-calendar-picker-indicator,
+.dark input[type="time"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+/* ---------------------------------------------------------------------
+   Lenis Smooth Scrolling Framework Integration
+   --------------------------------------------------------------------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }
