@@ -1,10 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// // Provide a minimal ambient declaration for the mongodb adapter path so TypeScript
-// // does not error when the package doesn't provide its own types.
-// declare module "better-auth/adapters/mongodb" {
-//   import { Db, MongoClient } from "mongodb";
-//   export function mongodbAdapter(db: Db, options?: { client?: MongoClient } | any): any;
-// }
+import dns from "node:dns";
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+
 
 import { betterAuth } from "better-auth";
 import { MongoClient, ServerApiVersion, Db } from "mongodb";
@@ -17,9 +13,14 @@ declare global {
 }
 
 const uri = process.env.MONGO_DB_URI;
+
+// Optimized connection configurations to handle strict network handshakes
 const options = {
   maxPoolSize: 10,
   minPoolSize: 1,
+  // Forces the driver to wait slightly longer during SSL handshakes before failing
+  serverSelectionTimeoutMS: 10000, 
+  connectTimeoutMS: 10000,
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
