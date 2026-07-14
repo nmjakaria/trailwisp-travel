@@ -71,13 +71,6 @@ export default function SigninPage(): React.JSX.Element {
         }
     };
 
-    // Quick demo login function for evaluation/reviewers
-    const handleDemoLogin = (): void => {
-        setEmail("demo@trailwisp.com");
-        setPassword("DemoPassword123!");
-        toast.info("Demo credentials pre-filled", { timeout: 1500 });
-    };
-
     const signInGoogle = async (): Promise<void> => {
         try {
             await authClient.signIn.social({
@@ -178,16 +171,6 @@ export default function SigninPage(): React.JSX.Element {
                                 Sign In
                             </Button>
 
-                            {/* Demo Login Button Requirement */}
-                            <Button
-                                type="button"
-                                variant="light"
-                                className="w-full text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-teal-600 h-8"
-                                onClick={handleDemoLogin}
-                                isDisabled={isLoading}
-                            >
-                                Use Demo Account
-                            </Button>
                         </div>
 
                         {/* Social Splitter */}
@@ -226,7 +209,7 @@ export default function SigninPage(): React.JSX.Element {
                 <div
                     className="w-full h-full rounded-[2.5rem] bg-cover bg-center shadow-md border border-zinc-200/50 dark:border-zinc-900"
                     style={{
-                        backgroundImage: `url('https://images.unsplash.com/photo-1650012763119-dba5b352b5f6?q=80&w=1600&auto=format&fit=crop')`
+                        backgroundImage: `url('https://images.unsplash.com/photo-1626239889138-a7e4f971059e?q=80&w=1600&auto=format&fit=crop')`
                     }}
                 >
                     <div className="w-full h-full bg-gradient-to-tr from-black/60 via-black/20 to-transparent rounded-[2.5rem] flex items-center justify-center p-10">

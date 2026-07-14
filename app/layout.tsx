@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Providers } from "./providers";
 import { FooterSection } from "@/components/FooterSection";
+import { Toast } from "@heroui/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +34,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <Providers>
-
+          <Toast.Provider placement="top end"
+            width={380}
+            gap={12}
+            maxVisibleToasts={4}
+            className="top-6 right-6" />
           <Navbar />
           {children}
           <FooterSection />

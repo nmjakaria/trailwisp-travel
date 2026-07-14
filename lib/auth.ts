@@ -19,7 +19,7 @@ const options = {
   maxPoolSize: 10,
   minPoolSize: 1,
   // Forces the driver to wait slightly longer during SSL handshakes before failing
-  serverSelectionTimeoutMS: 10000, 
+  serverSelectionTimeoutMS: 10000,
   connectTimeoutMS: 10000,
   serverApi: {
     version: ServerApiVersion.v1,
@@ -97,8 +97,18 @@ export const auth = betterAuth({
       maxAge: 5 * 24 * 60 * 60, // 5 Days
     },
   },
-  
+
   plugins: [
-    jwt()
+    jwt({
+      jwt: {
+        definePayload: ({ user, session }: { user: Record<string, any>; session: Record<string, any> }) => {
+          return {
+            email: user.email,
+            role: user.role,
+            isBlocked: user.isBlocked,
+          };
+        },
+      },
+    }),
   ],
 });

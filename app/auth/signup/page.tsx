@@ -87,14 +87,14 @@ export default function SignupPage(): React.JSX.Element {
 
     return (
         <div className="grid min-h-screen grid-cols-1 md:grid-cols-2 bg-zinc-50 dark:bg-zinc-950 transition-colors items-stretch">
-            
+
             {/* ─── LEFT SIDE: STICKY VISUAL PANEL ─── */}
             {/* Added sticky top-0 and items-center/justify-center to perfectly center the glass container */}
             <div className="hidden md:flex sticky top-0 h-screen p-4 items-center justify-center">
                 <div
                     className="w-full h-full rounded-[2.5rem] bg-cover bg-center shadow-md border border-zinc-200/50 dark:border-zinc-900"
                     style={{
-                        backgroundImage: `url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1600&auto=format&fit=crop')`
+                        backgroundImage: `url('https://images.unsplash.com/photo-1751809850108-18914e8a3862?q=80&w=1600&auto=format&fit=crop')`
                     }}
                 >
                     {/* Centered layout inside image panel */}
@@ -149,10 +149,10 @@ export default function SignupPage(): React.JSX.Element {
                         </TextField>
 
                         {/* Email Field */}
-                        <TextField 
-                            isRequired 
-                            name="email" 
-                            type="email" 
+                        <TextField
+                            isRequired
+                            name="email"
+                            type="email"
                             className="flex flex-col gap-1.5"
                             validate={(value) => {
                                 if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
@@ -174,9 +174,9 @@ export default function SignupPage(): React.JSX.Element {
                         </TextField>
 
                         {/* Password Field */}
-                        <TextField 
-                            isRequired 
-                            name="password" 
+                        <TextField
+                            isRequired
+                            name="password"
                             className="flex flex-col gap-1.5"
                             validate={(value) => {
                                 if (value.length < 6) {
@@ -258,7 +258,7 @@ export default function SignupPage(): React.JSX.Element {
                         <Button
                             type="submit"
                             color="primary"
-                            className="w-full font-semibold rounded-xl text-sm h-12 mt-2"
+                            className="w-full font-semibold rounded-xl text-sm h-12 bg-teal-600 hover:bg-teal-700 text-white"
                             isLoading={isLoading}
                             isDisabled={isLoading}
                         >

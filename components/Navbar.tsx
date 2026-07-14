@@ -49,10 +49,10 @@ export default function Navbar(): React.JSX.Element {
       href: dashboardLink[userRole] || "/dashboard/user",
     });
   }
-    
+
   if (user?.email && user?.role === 'user') {
     navLinks.push({
-      label: "Bookmarks", 
+      label: "Bookmarks",
       href: "/dashboard/user/bookmarks"
     });
   }
@@ -65,7 +65,7 @@ export default function Navbar(): React.JSX.Element {
         <div className="flex items-center justify-start">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal-500/10 dark:bg-teal-400/10 border border-teal-500/20 group-hover:scale-105 transition-transform duration-200">
-              <Image 
+              <Image
                 alt="Trailwisp Logo"
                 // src="/trailwisp_logo.png"
                 src="https://fastly.4sqi.net/img/general/600x600/170077684_WurW-saVWWTofqkCCrMb8YKNOocyqgaB34fc9AQrI4Q.png"
@@ -75,8 +75,8 @@ export default function Navbar(): React.JSX.Element {
               />
             </div>
             <div className="hidden leading-none sm:block">
-              <span className="text-xl font-black tracking-tight text-neutral-800 dark:text-neutral-50">
-                Trail<span className="text-teal-600 dark:text-teal-400">wisp</span>
+              <span className="text-lg font-black tracking-tight text-zinc-900 dark:text-zinc-50">
+                Trail<span className="bg-gradient-to-r from-teal-600 to-orange-500 bg-clip-text text-transparent">wisp</span>
               </span>
             </div>
           </Link>
@@ -120,14 +120,14 @@ export default function Navbar(): React.JSX.Element {
                     </div>
                   </Link>
 
-                  <Button
+                  {/* <Button
                     onClick={handleSignOut}
                     color="danger"
                     size="sm"
                     className="rounded-full font-medium"
                   >
                     Sign Out
-                  </Button>
+                  </Button> */}
                 </>
               ) : (
                 <>
@@ -212,13 +212,13 @@ export default function Navbar(): React.JSX.Element {
                     </div>
                   </Link>
 
-                  <Button
+                  {/* <Button
                     onClick={() => { handleSignOut(); setIsMenuOpen(false); }}
                     color="danger"
                     className="w-full rounded-xl font-medium"
                   >
                     Sign Out
-                  </Button>
+                  </Button> */}
                 </div>
               ) : (
                 <div className="flex flex-col gap-2 px-2">
