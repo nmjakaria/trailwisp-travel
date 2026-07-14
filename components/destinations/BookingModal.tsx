@@ -46,7 +46,9 @@ export default function BookingModal({
                 fullName,
                 phone,
                 email
-            }
+            },
+            pricePerSeat: pricePerPerson,
+            totalPrice: pricePerPerson * seats,
         };
 
         const success = await onSubmitBooking(payload);

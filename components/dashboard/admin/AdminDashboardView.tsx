@@ -159,6 +159,7 @@ export default function AdminDashboardView({
                                     <Table.Column className="font-bold text-zinc-500">DESTINATION PLACE</Table.Column>
                                     <Table.Column className="font-bold text-zinc-500">SCHEDULE</Table.Column>
                                     <Table.Column className="font-bold text-zinc-500 text-center">SEATS</Table.Column>
+                                    <Table.Column className="font-bold text-zinc-500 text-right">AMOUNT</Table.Column>
                                     <Table.Column className="font-bold text-zinc-500 text-right">ACTION CONTROLS</Table.Column>
                                 </Table.Header>
                                 <Table.Body>
@@ -179,6 +180,9 @@ export default function AdminDashboardView({
                                             </Table.Cell>
                                             <Table.Cell className="text-center font-bold text-zinc-850 dark:text-zinc-200">
                                                 {booking.seats}
+                                            </Table.Cell>
+                                            <Table.Cell className="text-right font-bold text-zinc-800 dark:text-zinc-200">
+                                                ৳{booking.totalPrice?.toLocaleString("en-BD") || "N/A"}
                                             </Table.Cell>
                                             <Table.Cell className="text-right">
                                                 <div className="flex items-center justify-end gap-1.5">

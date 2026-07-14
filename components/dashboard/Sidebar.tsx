@@ -43,11 +43,11 @@ export default function Sidebar({ user, onCloseMobile }: SidebarProps): React.JS
     // Navigation lists mapped directly from your technical specification
     const userLinks: SidebarLink[] = [
         { name: "Overview", href: "/dashboard/user", icon: CgLayoutGrid },
-        { name: "My Booked Places", href: "/dashboard/bookings", icon: Compass },
-        { name: "Add Travel Story", href: "/dashboard/stories/add", icon: FolderPlus },
-        { name: "My Travel Stories", href: "/dashboard/stories", icon: BookOpen },
-        { name: "My Wishlist", href: "/dashboard/wishlist", icon: Heart },
-        { name: "My Profile", href: "/dashboard/profile", icon: Person },
+        { name: "My Booked Places", href: "/dashboard/user/bookings", icon: Compass },
+        { name: "Add Travel Story", href: "/dashboard/user/stories/add", icon: FolderPlus },
+        { name: "My Travel Stories", href: "/dashboard/user/stories", icon: BookOpen },
+        { name: "My Wishlist", href: "/dashboard/user/wishlist", icon: Heart },
+        { name: "My Profile", href: "/dashboard/user/profile", icon: Person },
     ];
 
     const adminLinks: SidebarLink[] = [

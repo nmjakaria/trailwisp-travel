@@ -161,6 +161,7 @@ export default function UserDashboardView({
                                         <Table.Column isRowHeader className="font-bold text-zinc-500">PLACE</Table.Column>
                                         <Table.Column className="font-bold text-zinc-500">DATE & TIME</Table.Column>
                                         <Table.Column className="font-bold text-zinc-500 text-center">SEATS</Table.Column>
+                                        <Table.Column className="font-bold text-zinc-500 text-right">AMOUNT</Table.Column>
                                         <Table.Column className="font-bold text-zinc-500">STATUS</Table.Column>
                                         <Table.Column className="font-bold text-zinc-500 text-right">ACTIONS</Table.Column>
                                     </Table.Header>
@@ -176,6 +177,9 @@ export default function UserDashboardView({
                                                 </Table.Cell>
                                                 <Table.Cell className="text-center font-bold text-zinc-850 dark:text-zinc-200">
                                                     {booking.seats}
+                                                </Table.Cell>
+                                                <Table.Cell className="text-right font-bold text-zinc-800 dark:text-zinc-200">
+                                                    ৳{booking.totalPrice?.toLocaleString("en-BD") || "N/A"}
                                                 </Table.Cell>
                                                 <Table.Cell>
                                                     <Chip
