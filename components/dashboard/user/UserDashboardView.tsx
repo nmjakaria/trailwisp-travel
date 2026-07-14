@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card, Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, toast } from "@heroui/react";
+import { Card, Button, Table, Chip, toast } from "@heroui/react";
 import { Compass, Heart, BookOpen, Clock, TrashBin, ArrowRight, Star } from "@gravity-ui/icons";
 import { cancelMyBooking } from "@/lib/api/bookings";
 import { removeFromWishlist } from "@/lib/api/wishlist";
@@ -154,54 +154,58 @@ export default function UserDashboardView({
                             </div>
                         </Card>
                     ) : (
-                        <Table aria-label="Bookings Table" className="border border-zinc-200 dark:border-zinc-800 rounded-2xl bg-white dark:bg-zinc-900 overflow-hidden" shadow="none">
-                            <TableHeader>
-                                <TableColumn className="font-bold text-zinc-500">PLACE</TableColumn>
-                                <TableColumn className="font-bold text-zinc-500">DATE & TIME</TableColumn>
-                                <TableColumn className="font-bold text-zinc-500 text-center">SEATS</TableColumn>
-                                <TableColumn className="font-bold text-zinc-500">STATUS</TableColumn>
-                                <TableColumn className="font-bold text-zinc-500 text-right">ACTIONS</TableColumn>
-                            </TableHeader>
-                            <TableBody>
-                                {bookings.map((booking) => (
-                                    <TableRow key={booking._id} className="border-b border-zinc-100 dark:border-zinc-800 last:border-0">
-                                        <TableCell className="font-semibold text-zinc-900 dark:text-zinc-150">
-                                            {booking.placeId?.title || "Unknown Destination"}
-                                        </TableCell>
-                                        <TableCell className="text-zinc-650 dark:text-zinc-400 text-xs">
-                                            <div className="font-medium text-zinc-800 dark:text-zinc-350">{booking.departureDate}</div>
-                                            <div>{booking.departureTime}</div>
-                                        </TableCell>
-                                        <TableCell className="text-center font-bold text-zinc-850 dark:text-zinc-200">
-                                            {booking.seats}
-                                        </TableCell>
-                                        <TableCell>
-                                            <Chip
-                                                size="sm"
-                                                variant="flat"
-                                                color={booking.status === "confirmed" ? "success" : booking.status === "pending" ? "warning" : "danger"}
-                                                className="font-bold uppercase tracking-wide text-[9px] px-2 rounded-lg"
-                                            >
-                                                {booking.status}
-                                            </Chip>
-                                        </TableCell>
-                                        <TableCell className="text-right">
-                                            <Button
-                                                isIconOnly
-                                                size="sm"
-                                                variant="light"
-                                                color="danger"
-                                                onClick={() => handleCancelBooking(booking._id)}
-                                                isLoading={isMutating === booking._id}
-                                                isDisabled={booking.status === "cancelled"}
-                                                className="rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30"
-                                            >
-                                                <TrashBin size={16} />
-                                            </Button>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
+                        <Table className="border border-zinc-200 dark:border-zinc-800 rounded-2xl bg-white dark:bg-zinc-900 overflow-hidden">
+                            <Table.ScrollContainer>
+                                <Table.Content aria-label="Bookings Table">
+                                    <Table.Header>
+                                        <Table.Column isRowHeader className="font-bold text-zinc-500">PLACE</Table.Column>
+                                        <Table.Column className="font-bold text-zinc-500">DATE & TIME</Table.Column>
+                                        <Table.Column className="font-bold text-zinc-500 text-center">SEATS</Table.Column>
+                                        <Table.Column className="font-bold text-zinc-500">STATUS</Table.Column>
+                                        <Table.Column className="font-bold text-zinc-500 text-right">ACTIONS</Table.Column>
+                                    </Table.Header>
+                                    <Table.Body>
+                                        {bookings.map((booking) => (
+                                            <Table.Row key={booking._id} className="border-b border-zinc-100 dark:border-zinc-800 last:border-0">
+                                                <Table.Cell className="font-semibold text-zinc-900 dark:text-zinc-150">
+                                                    {booking.placeId?.title || "Unknown Destination"}
+                                                </Table.Cell>
+                                                <Table.Cell className="text-zinc-650 dark:text-zinc-400 text-xs">
+                                                    <div className="font-medium text-zinc-800 dark:text-zinc-350">{booking.departureDate}</div>
+                                                    <div>{booking.departureTime}</div>
+                                                </Table.Cell>
+                                                <Table.Cell className="text-center font-bold text-zinc-850 dark:text-zinc-200">
+                                                    {booking.seats}
+                                                </Table.Cell>
+                                                <Table.Cell>
+                                                    <Chip
+                                                        size="sm"
+                                                        variant="flat"
+                                                        color={booking.status === "confirmed" ? "success" : booking.status === "pending" ? "warning" : "danger"}
+                                                        className="font-bold uppercase tracking-wide text-[9px] px-2 rounded-lg"
+                                                    >
+                                                        {booking.status}
+                                                    </Chip>
+                                                </Table.Cell>
+                                                <Table.Cell className="text-right">
+                                                    <Button
+                                                        isIconOnly
+                                                        size="sm"
+                                                        variant="light"
+                                                        color="danger"
+                                                        onClick={() => handleCancelBooking(booking._id)}
+                                                        isLoading={isMutating === booking._id}
+                                                        isDisabled={booking.status === "cancelled"}
+                                                        className="rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30"
+                                                    >
+                                                        <TrashBin size={16} />
+                                                    </Button>
+                                                </Table.Cell>
+                                            </Table.Row>
+                                        ))}
+                                    </Table.Body>
+                                </Table.Content>
+                            </Table.ScrollContainer>
                         </Table>
                     )}
                 </div>
