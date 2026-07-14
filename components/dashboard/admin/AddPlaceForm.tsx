@@ -16,14 +16,9 @@ import {
 import { ArrowLeft, FolderPlus, TrashBin } from "@gravity-ui/icons";
 import { createPlace } from "@/lib/api/places";
 import { useRouter } from "next/navigation";
+import { PLACE_CATEGORIES } from "@/lib/constants/categories";
 
-const CATEGORIES = [
-    { label: "Beach", value: "Beach" },
-    { label: "Mountain", value: "Mountain" },
-    { label: "City", value: "City" },
-    { label: "Adventure", value: "Adventure" },
-    { label: "Cultural", value: "Cultural" },
-];
+const CATEGORIES = PLACE_CATEGORIES.map((cat) => ({ label: cat, value: cat }));
 
 export default function AddPlaceForm(): React.JSX.Element {
     const router = useRouter();

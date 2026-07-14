@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Card, Button, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, toast } from "@heroui/react";
+import { Card, Button, Table, Chip, toast } from "@heroui/react"; // ← TableHeader ইত্যাদি সরিয়ে ফেলুন
 import { Compass, BookOpen, FolderPlus, ArrowRight, Check, Xmark } from "@gravity-ui/icons";
 import { acceptBooking, updateBookingStatus } from "@/lib/api/bookings";
 import { BsPeople } from "react-icons/bs";
@@ -55,7 +55,7 @@ export default function AdminDashboardView({
             );
             toast.success("Booking cancelled.");
         } catch (err: any) {
-            toast.error(err.message || "Failed to reject booking.");
+            toast.warning(err.message || "Failed to reject booking.");
         } finally {
             setIsMutating(null);
         }
@@ -151,62 +151,66 @@ export default function AdminDashboardView({
                         <p className="text-sm text-zinc-500 font-medium">All clear! No pending booking verifications left in the system queue.</p>
                     </Card>
                 ) : (
-                    <Table aria-label="Verification Queue Table" className="border border-zinc-200 dark:border-zinc-800 rounded-2xl bg-white dark:bg-zinc-900 overflow-hidden" shadow="none">
-                        <TableHeader>
-                            <TableColumn className="font-bold text-zinc-500">TRAVELER</TableColumn>
-                            <TableColumn className="font-bold text-zinc-500">DESTINATION PLACE</TableColumn>
-                            <TableColumn className="font-bold text-zinc-500">SCHEDULE</TableColumn>
-                            <TableColumn className="font-bold text-zinc-500 text-center">SEATS</TableColumn>
-                            <TableColumn className="font-bold text-zinc-500 text-right">ACTION CONTROLS</TableColumn>
-                        </TableHeader>
-                        <TableBody>
-                            {pendingBookings.map((booking) => (
-                                <TableRow key={booking._id} className="border-b border-zinc-100 dark:border-zinc-800 last:border-0">
-                                    <TableCell className="font-semibold text-zinc-900 dark:text-zinc-100">
-                                        <div className="flex flex-col">
-                                            <span className="text-xs font-semibold">{booking.contactInfo?.fullName || "Guest User"}</span>
-                                            <span className="text-[10px] text-zinc-400 font-normal">{booking.contactInfo?.phone}</span>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="font-medium text-zinc-700 dark:text-zinc-300">
-                                        {booking.placeId?.title || "Unknown Destination"}
-                                    </TableCell>
-                                    <TableCell className="text-zinc-650 dark:text-zinc-400 text-xs">
-                                        <div className="font-medium text-zinc-800 dark:text-zinc-300">{booking.departureDate}</div>
-                                        <div>{booking.departureTime}</div>
-                                    </TableCell>
-                                    <TableCell className="text-center font-bold text-zinc-850 dark:text-zinc-200">
-                                        {booking.seats}
-                                    </TableCell>
-                                    <TableCell className="text-right">
-                                        <div className="flex items-center justify-end gap-1.5">
-                                            <Button
-                                                isIconOnly
-                                                size="sm"
-                                                color="success"
-                                                variant="light"
-                                                className="rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/20"
-                                                onClick={() => handleApprove(booking._id)}
-                                                isLoading={isMutating === booking._id}
-                                            >
-                                                <Check size={18} />
-                                            </Button>
-                                            <Button
-                                                isIconOnly
-                                                size="sm"
-                                                color="danger"
-                                                variant="light"
-                                                className="rounded-lg text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20"
-                                                onClick={() => handleReject(booking._id)}
-                                                isLoading={isMutating === booking._id}
-                                            >
-                                                <Xmark size={18} />
-                                            </Button>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
+                    <Table className="border border-zinc-200 dark:border-zinc-800 rounded-2xl bg-white dark:bg-zinc-900 overflow-hidden">
+                        <Table.ScrollContainer>
+                            <Table.Content aria-label="Verification Queue Table">
+                                <Table.Header>
+                                    <Table.Column isRowHeader className="font-bold text-zinc-500">TRAVELER</Table.Column>
+                                    <Table.Column className="font-bold text-zinc-500">DESTINATION PLACE</Table.Column>
+                                    <Table.Column className="font-bold text-zinc-500">SCHEDULE</Table.Column>
+                                    <Table.Column className="font-bold text-zinc-500 text-center">SEATS</Table.Column>
+                                    <Table.Column className="font-bold text-zinc-500 text-right">ACTION CONTROLS</Table.Column>
+                                </Table.Header>
+                                <Table.Body>
+                                    {pendingBookings.map((booking) => (
+                                        <Table.Row key={booking._id} className="border-b border-zinc-100 dark:border-zinc-800 last:border-0">
+                                            <Table.Cell className="font-semibold text-zinc-900 dark:text-zinc-100">
+                                                <div className="flex flex-col">
+                                                    <span className="text-xs font-semibold">{booking.contactInfo?.fullName || "Guest User"}</span>
+                                                    <span className="text-[10px] text-zinc-400 font-normal">{booking.contactInfo?.phone}</span>
+                                                </div>
+                                            </Table.Cell>
+                                            <Table.Cell className="font-medium text-zinc-700 dark:text-zinc-300">
+                                                {booking.placeId?.title || "Unknown Destination"}
+                                            </Table.Cell>
+                                            <Table.Cell className="text-zinc-650 dark:text-zinc-400 text-xs">
+                                                <div className="font-medium text-zinc-800 dark:text-zinc-300">{booking.departureDate}</div>
+                                                <div>{booking.departureTime}</div>
+                                            </Table.Cell>
+                                            <Table.Cell className="text-center font-bold text-zinc-850 dark:text-zinc-200">
+                                                {booking.seats}
+                                            </Table.Cell>
+                                            <Table.Cell className="text-right">
+                                                <div className="flex items-center justify-end gap-1.5">
+                                                    <Button
+                                                        isIconOnly
+                                                        size="sm"
+                                                        color="success"
+                                                        variant="light"
+                                                        className="rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/20"
+                                                        onClick={() => handleApprove(booking._id)}
+                                                        isLoading={isMutating === booking._id}
+                                                    >
+                                                        <Check size={18} />
+                                                    </Button>
+                                                    <Button
+                                                        isIconOnly
+                                                        size="sm"
+                                                        color="danger"
+                                                        variant="light"
+                                                        className="rounded-lg text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/20"
+                                                        onClick={() => handleReject(booking._id)}
+                                                        isLoading={isMutating === booking._id}
+                                                    >
+                                                        <Xmark size={18} />
+                                                    </Button>
+                                                </div>
+                                            </Table.Cell>
+                                        </Table.Row>
+                                    ))}
+                                </Table.Body>
+                            </Table.Content>
+                        </Table.ScrollContainer>
                     </Table>
                 )}
             </div>

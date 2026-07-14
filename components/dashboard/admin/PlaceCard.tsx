@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React from "react";
@@ -33,6 +34,9 @@ export default function PlaceCard({ place, onToggleFeatured, onDeleteClick }: Pl
                     src={place.images?.[0] || "/placeholder-image.png"} 
                     alt={place.title} 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    width={500}
+                    height={300}
+                    
                 />
                 <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
                     <Chip className="bg-white/95 dark:bg-zinc-900/95 text-zinc-800 dark:text-zinc-200 font-bold text-[10px] px-2.5 h-6 backdrop-blur-sm shadow-sm">

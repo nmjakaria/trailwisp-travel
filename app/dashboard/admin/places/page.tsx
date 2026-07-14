@@ -30,7 +30,7 @@ export default function AdminPlacesPage() {
     
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(1);
-    const itemsPerPage = 6; 
+    const itemsPerPage = 9; 
 
     // Deletion Modal States
     const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
