@@ -39,7 +39,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
         // Auth-required বা mutation হলে সবসময় fresh ডেটা লাগবে
         ...(auth || method !== 'GET'
             ? { cache: 'no-store' as const }
-            : { next: { revalidate: revalidate ?? 0, tags } }),
+            : { next: { revalidate: revalidate ?? (auth ? 0 : 60), tags } }),
     });
 
     if (!res.ok) {
@@ -56,8 +56,9 @@ export const publicFetch = <T>(path: string, options?: Pick<RequestOptions, 'rev
     request<T>(path, { method: 'GET', auth: false, ...options });
 
 /** লগইন-প্রয়োজনীয় GET — "My Bookings", "My Wishlist" ইত্যাদির জন্য */
-export const authFetch = <T>(path: string) =>
-    request<T>(path, { method: 'GET', auth: true });
+
+export const authFetch = <T>(path: string, options?: Pick<RequestOptions, 'tags'>) =>
+    request<T>(path, { method: 'GET', auth: true, ...options });
 
 /** যেকোনো মিউটেশন (POST/PUT/PATCH/DELETE) — সবসময় auth token পাঠানোর চেষ্টা করে */
 export const mutate = <T>(path: string, body?: unknown, method: RequestOptions['method'] = 'POST') =>

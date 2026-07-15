@@ -47,7 +47,7 @@ export default function Sidebar({ user, onCloseMobile }: SidebarProps): React.JS
         { name: "Add Travel Story", href: "/dashboard/user/stories/add", icon: FolderPlus },
         { name: "My Travel Stories", href: "/dashboard/user/stories", icon: BookOpen },
         { name: "My Wishlist", href: "/dashboard/user/wishlist", icon: Heart },
-        { name: "My Profile", href: "/dashboard/user/profile", icon: Person },
+        { name: "My Profile", href: "/dashboard/user/my-profile", icon: Person },
     ];
 
     const adminLinks: SidebarLink[] = [
@@ -59,7 +59,7 @@ export default function Sidebar({ user, onCloseMobile }: SidebarProps): React.JS
         { name: "Manage Comments", href: "/dashboard/admin/comments", icon: BiMessageSquare },
         { name: "Manage Users", href: "/dashboard/admin/users", icon: BsPeople },
         { name: "Add Latest News", href: "/dashboard/admin/news", icon: Megaphone },
-        { name: "Admin Profile", href: "/dashboard/admin/profile", icon: Person },
+        { name: "Admin Profile", href: "/dashboard/admin/my-profile", icon: Person },
     ];
 
     const targetNavigationLinks = isCurrentAdmin ? adminLinks : userLinks;
