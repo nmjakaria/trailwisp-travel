@@ -5,6 +5,7 @@ import { getAllBookings } from "@/lib/api/bookings";
 import { getPlaces } from "@/lib/api/places";
 import { getStories } from "@/lib/api/stories";
 import AdminDashboardView from "@/components/dashboard/admin/AdminDashboardView";
+import { DashboardStats } from "@/components/dashboard/admin/DashboardStats";
 
 export const metadata: Metadata = {
     title: "Overview | Admin Dashboard - Trailwisp",
@@ -41,11 +42,14 @@ export default async function AdminDashboardPage(): Promise<React.JSX.Element> {
     }
 
     return (
-        <AdminDashboardView
-            user={user}
-            initialBookings={initialBookings}
-            placesCount={initialPlaces.total}
-            initialStories={initialStories}
-        />
+        <>
+            <AdminDashboardView
+                user={user}
+                initialBookings={initialBookings}
+                placesCount={initialPlaces.total}
+                initialStories={initialStories}
+            />
+            <DashboardStats />
+        </>
     );
 }

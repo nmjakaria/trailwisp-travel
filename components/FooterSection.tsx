@@ -15,7 +15,7 @@ export function FooterSection() {
     support: [
       { label: "Contact Us", href: "/contact" },
       { label: "Help & Support", href: "/support" },
-      { label: "User Dashboard", href: "/dashboard/user/stories" },
+      { label: "User Dashboard", href: "/dashboard/user" },
     ],
     legal: [
       { label: "Privacy Policy", href: "/privacy" },
