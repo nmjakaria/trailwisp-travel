@@ -50,9 +50,7 @@ export default function AdminStoryManagementView({
 
         try {
             // Note: Directly hitting the PATCH /api/stories/:id/feature backend route
-            const response = await toggleFeatureStory(story._id);
-
-            if (!response.ok) throw new Error("Feature action rejected by API");
+            await toggleFeatureStory(story._id);
             
             toast.success(
                 originalStatus 
@@ -88,7 +86,7 @@ export default function AdminStoryManagementView({
             setStories((prev) => prev.filter((s) => s._id !== targetStory._id));
             toast.success("Travel memory successfully purged from the database.");
         } catch (err: any) {
-            toast.error(err.message || "Failed to remove database entry.");
+            toast.warning(err.message || "Failed to remove database entry.");
         } finally {
             setIsMutating(null);
             setTargetStory(null);
