@@ -37,20 +37,18 @@ export default function NewsManagerView({ initialNews }: NewsManagerViewProps): 
             toast.warning("Title and content are required fields");
             return;
         }
-
         setIsSubmitting(true);
         try {
             const result = await createNews({ title, content, badgeText, linkUrl });
-            setNewsList((prev) => [result.data, ...prev]);
+            setNewsList((prev) => [result, ...prev]);   // ← .data সরিয়ে ফেলুন
             toast.success("News bulletin broadcasted successfully");
-            
-            // Reset form fields
+
             setTitle("");
             setContent("");
             setBadgeText("");
             setLinkUrl("");
         } catch (err: any) {
-            toast.error(err.message || "Failed to post update");
+            toast.warning(err.message || "Failed to post update");
         } finally {
             setIsSubmitting(false);
         }
@@ -98,6 +96,7 @@ export default function NewsManagerView({ initialNews }: NewsManagerViewProps): 
                     <h3 className="font-bold text-zinc-800 dark:text-zinc-200 text-sm">Draft New Alert</h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="md:col-span-2 space-y-1">
+                            <label  className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Alert Headline</label>
                             <input
                                 type="text"
                                 placeholder="Alert Headline (e.g., Flash Sale live now!)"
@@ -107,6 +106,7 @@ export default function NewsManagerView({ initialNews }: NewsManagerViewProps): 
                             />
                         </div>
                         <div className="space-y-1">
+                            <label className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Badge Text</label>
                             <input
                                 type="text"
                                 placeholder="Badge text (e.g., HOT, SALE)"
@@ -118,6 +118,7 @@ export default function NewsManagerView({ initialNews }: NewsManagerViewProps): 
                     </div>
 
                     <div className="space-y-1">
+                        <label className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Alert Content</label>
                         <textarea
                             placeholder="Detailed message content context..."
                             value={content}
@@ -128,13 +129,16 @@ export default function NewsManagerView({ initialNews }: NewsManagerViewProps): 
                     </div>
 
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-1">
-                        <input
-                            type="text"
-                            placeholder="Redirect Destination Path / Url (Optional)"
-                            value={linkUrl}
-                            onChange={(e) => setLinkUrl(e.target.value)}
-                            className="w-full sm:max-w-md px-4 py-1.5 text-xs border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 rounded-xl outline-hidden focus:border-teal-600"
-                        />
+                        <div className="space-y-1">
+                            <label className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Redirect Destination</label>
+                            <input
+                                type="text"
+                                placeholder="Redirect Destination Path / Url (Optional)"
+                                value={linkUrl}
+                                onChange={(e) => setLinkUrl(e.target.value)}
+                                className="w-full sm:max-w-md px-4 py-1.5 text-xs border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 rounded-xl outline-hidden focus:border-teal-600"
+                            />
+                        </div>
                         <Button
                             type="submit"
                             size="sm"
@@ -207,8 +211,8 @@ export default function NewsManagerView({ initialNews }: NewsManagerViewProps): 
             )}
 
             {/* Custom Modal configuration pattern */}
-            <Modal 
-                isOpen={isModalOpen} 
+            <Modal
+                isOpen={isModalOpen}
                 onOpenChange={(open: boolean) => { if (!open) setIsModalOpen(false); }}
             >
                 <Modal.Backdrop>

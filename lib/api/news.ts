@@ -1,5 +1,6 @@
 'use server';
-import { revalidateTag } from 'next/cache';
+
+import { revalidatePath, updateTag } from 'next/cache';
 import { publicFetch, mutate, authFetch } from '../core/server';
 
 export interface NewsInput {
@@ -15,14 +16,15 @@ export const getLatestNews = async () =>
 export const getAllNews = async (page = 1, limit = 20) =>
     authFetch(`/api/news/all?page=${page}&limit=${limit}`);
 
-export const createNews = async (data: NewsInput) => {
-    const result = await mutate('/api/news', data, 'POST');
-
+export const createNews = async (data: NewsInput): Promise<NewsItem> => {
+    const result = await mutate<NewsItem>('/api/news', data, 'POST');
+    updateTag('latest-news');
+    revalidatePath('/dashboard/admin/news');
     return result;
 };
 
 export const deleteNews = async (id: string) => {
     const result = await mutate(`/api/news/${id}`, undefined, 'DELETE');
-
+    revalidatePath('/dashboard/admin/news');
     return result;
 };

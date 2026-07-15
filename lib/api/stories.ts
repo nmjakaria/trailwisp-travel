@@ -25,7 +25,7 @@ export const createStory = async (data: unknown) => {
 };
 
 export const updateStory = async (id: string, data: unknown) => {
-    const result = await mutate(`/api/stories/${id}`, data, 'PUT');
+    const result = await mutate(`/api/stories/${id}`, data, 'PATCH');
     revalidatePath('/dashboard/stories');
     revalidateTag(`story-${id}`);
     return result;
