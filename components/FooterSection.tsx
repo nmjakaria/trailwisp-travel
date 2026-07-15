@@ -1,31 +1,30 @@
 "use client";
 
 import React from "react";
-import { Link } from "@heroui/react";
+import Link from "next/link";
 
 export function FooterSection() {
   const currentYear = new Date().getFullYear();
 
   const links = {
-    product: [
-      { label: "Features", href: "#" },
-      { label: "Live Maps", href: "#" },
-      { label: "Pricing plans", href: "#" },
+    explore: [
+      { label: "Public Stories", href: "/stories" },
+      { label: "About Trailwisp", href: "/about" },
+      { label: "Latest Bulletins", href: "/news" },
     ],
-    community: [
-      { label: "Explore Stories", href: "#" },
-      { label: "Creator Spotlights", href: "#" },
-      { label: "Travel Forums", href: "#" },
+    support: [
+      { label: "Contact Us", href: "/contact" },
+      { label: "Help & Support", href: "/support" },
+      { label: "User Dashboard", href: "/dashboard/user/stories" },
     ],
     legal: [
-      { label: "Privacy Policy", href: "#" },
-      { label: "Terms of Service", href: "#" },
-      { label: "Cookie settings", href: "#" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms of Service", href: "/terms" },
     ],
   };
 
   return (
-    <footer className="bg-background-tertiary border-zinc-200/60 dark:border-zinc-800 transition-colors pt-16 pb-12">
+    <footer className="bg-background-tertiary border-t border-zinc-200/60 dark:border-zinc-800 transition-colors pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12">
@@ -33,33 +32,33 @@ export function FooterSection() {
           {/* Brand Identity Pillar */}
           <div className="lg:col-span-2 flex flex-col gap-4">
             <Link href="/" className="flex items-center gap-2 group w-fit">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-teal to-teal-600 shadow shadow-teal-500/20 group-hover:scale-105 transition-transform duration-200">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-teal-700 shadow-sm shadow-teal-500/20 group-hover:scale-105 transition-transform duration-200">
                 <span className="text-sm font-bold text-white">T</span>
               </div>
               <span className="text-lg font-black tracking-tight text-zinc-900 dark:text-zinc-50">
-                Trail<span className="bg-gradient-to-r from-brand-teal to-brand-orange bg-clip-text text-transparent">wisp</span>
+                Trail<span className="bg-gradient-to-r from-teal-500 to-amber-500 bg-clip-text text-transparent">wisp</span>
               </span>
             </Link>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-xs leading-relaxed">
-              A comprehensive documentation canvas tailored for modern full-stack travelers mapping authentic, unvarnished pathways.
+              A modern travel chronicle platform built for authentic travelers to map, share, and archive their unvarnished journeys worldwide.
             </p>
           </div>
 
-          {/* Product Links */}
+          {/* Explore Links */}
           <div className="flex flex-col gap-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Product</span>
-            {links.product.map((item) => (
-              <Link key={item.label} href={item.href} className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-brand-teal dark:hover:text-brand-teal transition-colors w-fit">
+            <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Explore</span>
+            {links.explore.map((item) => (
+              <Link key={item.label} href={item.href} className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors w-fit">
                 {item.label}
               </Link>
             ))}
           </div>
 
-          {/* Community Links */}
+          {/* Support Links */}
           <div className="flex flex-col gap-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Community</span>
-            {links.community.map((item) => (
-              <Link key={item.label} href={item.href} className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-brand-teal dark:hover:text-brand-teal transition-colors w-fit">
+            <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Support</span>
+            {links.support.map((item) => (
+              <Link key={item.label} href={item.href} className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors w-fit">
                 {item.label}
               </Link>
             ))}
@@ -69,7 +68,7 @@ export function FooterSection() {
           <div className="flex flex-col gap-3">
             <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">Legal</span>
             {links.legal.map((item) => (
-              <Link key={item.label} href={item.href} className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-brand-teal dark:hover:text-brand-teal transition-colors w-fit">
+              <Link key={item.label} href={item.href} className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors w-fit">
                 {item.label}
               </Link>
             ))}
