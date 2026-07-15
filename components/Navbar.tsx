@@ -52,8 +52,8 @@ export default function Navbar(): React.JSX.Element {
 
   if (user?.email && user?.role === 'user') {
     navLinks.push({
-      label: "Bookmarks",
-      href: "/dashboard/user/bookmarks"
+      label: "Wishlist",
+      href: "/dashboard/user/wishlist"
     });
   }
 
