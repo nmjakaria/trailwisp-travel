@@ -1,20 +1,28 @@
-//lib/api/news.ts
 'use server';
 import { revalidateTag } from 'next/cache';
-import { publicFetch, mutate } from '../core/server';
+import { publicFetch, mutate, authFetch } from '../core/server';
 
-export interface CreateNewsInput {
+export interface NewsInput {
     title: string;
-    body: string;
+    content: string;
+    badgeText?: string;
+    linkUrl?: string;
 }
 
-/** Navbar-এর scrolling news ticker-এর জন্য — পাবলিক */
-export const getNews = () =>
-    publicFetch('/api/news', { revalidate: 30, tags: ['news'] }); // ticker ঘন ঘন আপডেট হতে পারে, তাই cache কম সময়ের
+export const getLatestNews = async () =>
+    publicFetch('/api/news/latest', { tags: ['latest-news'] });
 
-// --- Admin ---
-export const createNews = async (data: CreateNewsInput) => {
+export const getAllNews = async (page = 1, limit = 20) =>
+    authFetch(`/api/news/all?page=${page}&limit=${limit}`);
+
+export const createNews = async (data: NewsInput) => {
     const result = await mutate('/api/news', data, 'POST');
-    revalidateTag('news');
+
+    return result;
+};
+
+export const deleteNews = async (id: string) => {
+    const result = await mutate(`/api/news/${id}`, undefined, 'DELETE');
+
     return result;
 };

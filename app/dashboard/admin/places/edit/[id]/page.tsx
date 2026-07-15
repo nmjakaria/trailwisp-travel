@@ -16,14 +16,9 @@ import {
 } from "@heroui/react";
 import { ArrowLeft, FloppyDisk, TrashBin, Compass } from "@gravity-ui/icons";
 import { getPlaceById, updatePlace } from "@/lib/api/places";
+import { PLACE_CATEGORIES } from "@/lib/constants/categories";
 
-const CATEGORIES = [
-    { label: "Beach", value: "Beach" },
-    { label: "Mountain", value: "Mountain" },
-    { label: "City", value: "City" },
-    { label: "Adventure", value: "Adventure" },
-    { label: "Cultural", value: "Cultural" },
-];
+const CATEGORIES = PLACE_CATEGORIES.map((cat) => ({ label: cat, value: cat }));
 
 interface EditPlacePageProps {
     params: Promise<{ id: string }>;

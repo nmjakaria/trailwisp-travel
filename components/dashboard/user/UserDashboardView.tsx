@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card, Button, Table, Chip, toast } from "@heroui/react";
+import { Card, Button, Table, Chip, toast, Modal } from "@heroui/react";
 import { Compass, Heart, BookOpen, Clock, TrashBin, ArrowRight, Star } from "@gravity-ui/icons";
 import { cancelMyBooking } from "@/lib/api/bookings";
 import { removeFromWishlist } from "@/lib/api/wishlist";
@@ -32,18 +32,32 @@ export default function UserDashboardView({
     const [wishlist, setWishlist] = useState<any[]>(initialWishlist);
     const [isMutating, setIsMutating] = useState<string | null>(null);
 
-    // Cancel a trip booking
-    const handleCancelBooking = async (bookingId: string) => {
-        if (!confirm("Are you sure you want to cancel this booking?")) return;
-        setIsMutating(bookingId);
+    // Modal control state
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [targetBookingId, setTargetBookingId] = useState<string | null>(null);
+
+    // Triggers the modal popup
+    const initiateCancellation = (bookingId: string) => {
+        setTargetBookingId(bookingId);
+        setIsModalOpen(true);
+    };
+
+    // Executes backend API call on user confirmation
+    const handleConfirmCancel = async () => {
+        if (!targetBookingId) return;
+
+        setIsModalOpen(false); // UI response: instantly dismiss modal
+        setIsMutating(targetBookingId);
+
         try {
-            await cancelMyBooking(bookingId);
-            setBookings((prev) => prev.filter((b) => b._id !== bookingId));
-            toast.success("Booking cancelled successfully", { timeout: 3000 });
+            await cancelMyBooking(targetBookingId);
+            setBookings((prev) => prev.filter((b) => b._id !== targetBookingId));
+            toast.success("Booking cancelled successfully");
         } catch (err: any) {
             toast.error(err.message || "Failed to cancel booking");
         } finally {
             setIsMutating(null);
+            setTargetBookingId(null);
         }
     };
 
@@ -55,7 +69,7 @@ export default function UserDashboardView({
             setWishlist((prev) => prev.filter((w) => w._id !== wishlistId));
             toast.success("Removed from your wishlist");
         } catch (err: any) {
-            toast.error(err.message || "Failed to remove item");
+            toast.warning(err.message || "Failed to remove item");
         } finally {
             setIsMutating(null);
         }
@@ -132,8 +146,7 @@ export default function UserDashboardView({
                             <Compass size={20} className="text-teal-600" />
                             My Travel Bookings
                         </h2>
-                        <Link
-                            href="/destinations">
+                        <Link href="/destinations">
                             <Button size="sm" className="bg-teal-600 text-white font-semibold rounded-xl">
                                 Browse places <ArrowRight size={14} />
                             </Button>
@@ -144,9 +157,7 @@ export default function UserDashboardView({
                         <Card className="p-12 text-center border border-dashed border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-[1.5rem]">
                             <p className="text-sm text-zinc-500">You don't have any travel bookings listed yet.</p>
                             <div className="mt-4">
-                                <Link
-                                    href="/destinations"
-                                >
+                                <Link href="/destinations">
                                     <Button size="sm" className="bg-teal-600 text-white font-semibold rounded-xl">
                                         Start Booking Trips
                                     </Button>
@@ -197,7 +208,7 @@ export default function UserDashboardView({
                                                         size="sm"
                                                         variant="light"
                                                         color="danger"
-                                                        onClick={() => handleCancelBooking(booking._id)}
+                                                        onClick={() => initiateCancellation(booking._id)}
                                                         isLoading={isMutating === booking._id}
                                                         isDisabled={booking.status === "cancelled"}
                                                         className="rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30"
@@ -273,6 +284,42 @@ export default function UserDashboardView({
                 </div>
 
             </div>
+
+            {/* Custom Confirm Deletion Modal Layer */}
+            <Modal isOpen={isModalOpen} onOpenChange={(open: boolean) => { if (!open) setIsModalOpen(false); }}>
+                <Modal.Backdrop>
+                    <Modal.Container placement="auto">
+                        <Modal.Dialog className="sm:max-w-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl overflow-hidden shadow-xl">
+                            <Modal.CloseTrigger />
+                            
+                            <Modal.Header className="p-6 pb-2">
+                                <Modal.Heading className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
+                                    Cancel Booking
+                                </Modal.Heading>
+                                <p className="mt-1.5 text-sm text-zinc-500 leading-relaxed">
+                                    Are you sure you want to cancel this booking? This action cannot be undone.
+                                </p>
+                            </Modal.Header>
+
+                            <Modal.Footer className="p-6 pt-4 flex gap-2 justify-end">
+                                <Button 
+                                    variant="secondary" 
+                                    className="rounded-xl"
+                                    onClick={() => setIsModalOpen(false)}
+                                >
+                                    No, Keep Booking
+                                </Button>
+                                <Button 
+                                    className="bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl"
+                                    onClick={handleConfirmCancel}
+                                >
+                                    Yes, Cancel Booking
+                                </Button>
+                            </Modal.Footer>
+                        </Modal.Dialog>
+                    </Modal.Container>
+                </Modal.Backdrop>
+            </Modal>
         </div>
     );
 }

@@ -1,13 +1,15 @@
 //lib/api/comments.ts
 'use server';
 import { revalidateTag } from 'next/cache';
-import { publicFetch, mutate } from '../core/server';
+import { publicFetch, mutate, authFetch } from '../core/server';
 
 export interface CreateCommentInput {
     targetId: string;
     targetType: 'place' | 'story';
     text: string;
 }
+export const getAllComments = async (page = 1, limit = 20) =>
+    authFetch(`/api/comments/all?page=${page}&limit=${limit}`);
 
 export const getCommentsForTarget = async (targetId: string) =>
     publicFetch(`/api/comments/${targetId}`, { tags: [`comments-${targetId}`] });

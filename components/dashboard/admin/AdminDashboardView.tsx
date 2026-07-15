@@ -38,7 +38,7 @@ export default function AdminDashboardView({
             );
             toast.success("Booking confirmed successfully!");
         } catch (err: any) {
-            toast.error(err.message || "Failed to accept booking.");
+            toast.warning(err.message || "Failed to accept booking.");
         } finally {
             setIsMutating(null);
         }
