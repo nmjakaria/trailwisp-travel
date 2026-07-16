@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Button, Input, Modal, Surface, TextField, Label } from "@heroui/react";
 import { CommentPlus, StarFill, TrashBin } from "@gravity-ui/icons";
 import { getCommentsForTarget, createComment, deleteComment } from "@/lib/api/comments";
+import { useSession } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface Comment {
     _id: string;
@@ -15,7 +17,7 @@ interface Comment {
 
 interface CommentSectionProps {
     targetId: string;
-    currentUserId?: string; 
+    currentUserId?: string;
 }
 
 export default function CommentSection({ targetId, currentUserId }: CommentSectionProps) {
@@ -23,6 +25,9 @@ export default function CommentSection({ targetId, currentUserId }: CommentSecti
     const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
     const [newCommentText, setNewCommentText] = useState<string>("");
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const { data: session } = useSession();          // ← যোগ করুন
+    const router = useRouter();                      // ← যোগ করুন
+    const isLoggedIn = !!session?.user;
 
     const loadComments = React.useCallback(async () => {
         try {
@@ -58,6 +63,14 @@ export default function CommentSection({ targetId, currentUserId }: CommentSecti
             setIsSubmitting(false);
         }
     };
+    const openCommentModal = () => {
+        if (!isLoggedIn) {
+            const params = new URLSearchParams({ message: 'login_required', redirect: `/destinations/${targetId}` });
+            router.push(`/auth/signin?${params.toString()}`);
+            return;
+        }
+        setIsCommentModalOpen(true);
+    };
 
     const handleDelete = async (commentId: string) => {
         try {
@@ -74,10 +87,10 @@ export default function CommentSection({ targetId, currentUserId }: CommentSecti
                 <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 flex items-center gap-2">
                     <CommentPlus className="text-teal-600 size-5" /> Discussions ({comments.length})
                 </h3>
-                <Button 
-                    size="sm" 
+                <Button
+                    size="sm"
                     className="bg-teal-600 text-white font-bold rounded-xl text-xs"
-                    onClick={() => setIsCommentModalOpen(true)}
+                    onClick={openCommentModal}
                 >
                     Write Comment
                 </Button>
@@ -95,13 +108,12 @@ export default function CommentSection({ targetId, currentUserId }: CommentSecti
                         const canDelete = currentUserId && commenterId === currentUserId;
 
                         return (
-                            <div 
-                                key={c._id} 
-                                className={`p-4 rounded-2xl border relative transition-all ${
-                                    c.isBestComment 
-                                        ? "bg-amber-50/50 dark:bg-amber-950/10 border-amber-200 dark:border-amber-900/30" 
+                            <div
+                                key={c._id}
+                                className={`p-4 rounded-2xl border relative transition-all ${c.isBestComment
+                                        ? "bg-amber-50/50 dark:bg-amber-950/10 border-amber-200 dark:border-amber-900/30"
                                         : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800"
-                                }`}
+                                    }`}
                             >
                                 <div className="flex items-center justify-between mb-1.5">
                                     <div className="flex items-center gap-2">
@@ -117,9 +129,9 @@ export default function CommentSection({ targetId, currentUserId }: CommentSecti
                                     </span>
                                 </div>
                                 <p className="text-sm text-zinc-600 dark:text-zinc-300 pr-8">{c.text}</p>
-                                
+
                                 {canDelete && (
-                                    <button 
+                                    <button
                                         onClick={() => handleDelete(c._id)}
                                         className="absolute right-3 bottom-3 text-zinc-400 hover:text-red-500 transition-colors"
                                     >
@@ -138,7 +150,7 @@ export default function CommentSection({ targetId, currentUserId }: CommentSecti
                     <Modal.Container placement="auto">
                         <Modal.Dialog className="sm:max-w-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl overflow-hidden shadow-xl">
                             <Modal.CloseTrigger />
-                            
+
                             <Modal.Header className="p-6 pb-2">
                                 <Modal.Heading className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
                                     Share Your Experience
@@ -153,8 +165,8 @@ export default function CommentSection({ targetId, currentUserId }: CommentSecti
                                     <form id="modal-comment-form" onSubmit={handleCreateComment} className="flex flex-col gap-4">
                                         <TextField className="w-full" name="commentText" variant="secondary">
                                             <Label className="text-xs font-semibold mb-1 block text-zinc-500">Review / Commentary text</Label>
-                                            <Input 
-                                                placeholder="Type your honest experience notes here..." 
+                                            <Input
+                                                placeholder="Type your honest experience notes here..."
                                                 value={newCommentText}
                                                 onChange={(e) => setNewCommentText(e.target.value)}
                                                 required
@@ -165,15 +177,15 @@ export default function CommentSection({ targetId, currentUserId }: CommentSecti
                             </Modal.Body>
 
                             <Modal.Footer className="p-6 pt-4 flex gap-2 justify-end">
-                                <Button 
-                                    variant="secondary" 
+                                <Button
+                                    variant="secondary"
                                     className="rounded-xl"
                                     onClick={() => setIsCommentModalOpen(false)}
                                 >
                                     Discard
                                 </Button>
-                                <Button 
-                                    type="submit" 
+                                <Button
+                                    type="submit"
                                     form="modal-comment-form"
                                     disabled={isSubmitting}
                                     className="bg-teal-600 text-white font-bold rounded-xl"

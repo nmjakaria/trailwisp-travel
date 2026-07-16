@@ -21,20 +21,23 @@ export const getUserToken = async (): Promise<string | null> => {
     }
 };
 
-export const requireAuth = async () => {
+export const requireAuth = async (redirectPath: string = '/') => {
     const user = await getUserSession();
-    if (!user) redirect('/login');
+    if (!user) {
+        const params = new URLSearchParams({ message: 'login_required', redirect: redirectPath });
+        redirect(`/auth/signin?${params.toString()}`);
+    }
     return user;
 };
 
-export const requireRole = async (role: 'user' | 'admin') => {
-    const user = await requireAuth();
+export const requireRole = async (role: 'user' | 'admin', redirectPath: string = '/') => {
+    const user = await requireAuth(redirectPath);
     if (user.role !== role) redirect('/unauthorized');
     return user;
 };
 
-export const requireNotBlocked = async () => {
-    const user = await requireAuth();
+export const requireNotBlocked = async (redirectPath: string = '/') => {
+    const user = await requireAuth(redirectPath);
     if (user.isBlocked) redirect('/blocked');
     return user;
 };

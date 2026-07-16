@@ -36,6 +36,7 @@ interface Place {
     category: string;
     duration: string;
     images: string[];
+    availableDates: string[];
     rating?: number;
     shortDescription?: string;
     description?: string;
@@ -94,8 +95,7 @@ export default function DestinationDetailsPage() {
     }, [id]);
 
     useEffect(() => {
-        if (!id) return;
-
+        if (!id || !isLoggedIn) return;   // ← isLoggedIn চেক যোগ করুন
         async function checkWishlistStatus() {
             try {
                 const res = await getMyWishlist();
@@ -111,13 +111,12 @@ export default function DestinationDetailsPage() {
                 console.error("Failed to check wishlist status:", err);
             }
         }
-
         checkWishlistStatus();
-    }, [id]);
+    }, [id, isLoggedIn]);
 
     const handleToggleLike = async () => {
-        await requireAuth();
-        await requireNotBlocked();
+        await requireAuth(`/destinations/${id}`);
+        await requireNotBlocked(`/destinations/${id}`);
         try {
             await toggleLike(id, 'place');
             setIsLiked(!isLiked);
@@ -128,8 +127,8 @@ export default function DestinationDetailsPage() {
     };
 
     const handleToggleWishlist = async () => {
-        await requireAuth();
-        await requireNotBlocked();
+        await requireAuth(`/destinations/${id}`);
+        await requireNotBlocked(`/destinations/${id}`);
         try {
             if (isWishlisted && wishlistItemId) {
                 await removeFromWishlist(wishlistItemId);
@@ -150,8 +149,8 @@ export default function DestinationDetailsPage() {
     };
 
     const handleProcessBookingRequest = async (bookingData: any): Promise<boolean> => {
-        await requireAuth();
-        await requireNotBlocked();
+        await requireAuth(`/destinations/${id}`);
+        await requireNotBlocked(`/destinations/${id}`);
         try {
             await createBooking(bookingData);
             toast.success("Booking request submitted successfully!");
@@ -340,7 +339,11 @@ export default function DestinationDetailsPage() {
 
                         <Button
                             className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 rounded-2xl shadow-md shadow-teal-600/10 transition-all flex items-center justify-center gap-2 text-sm"
-                            onClick={() => setIsBookingOpen(true)}
+                            onClick={async () => {
+                                await requireAuth(`/destinations/${id}`);
+                                await requireNotBlocked(`/destinations/${id}`);
+                                setIsBookingOpen(true);
+                            }}
                         >
                             Initiate Booking Protocol
                             <ArrowUpRight className="size-4" />
@@ -361,7 +364,6 @@ export default function DestinationDetailsPage() {
                 placeTitle={place.title}
                 pricePerPerson={place.price}
                 availableDates={place.availableDates || []}  // ← যোগ করুন
-
                 onSubmitBooking={handleProcessBookingRequest}
             />
         </div>
