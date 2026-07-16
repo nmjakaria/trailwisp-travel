@@ -6,17 +6,17 @@ import { Compass, Heart, StarFill } from "@gravity-ui/icons";
 
 export default function AboutPage() {
   const stats = [
-    { label: "Active Explorers", value: "10K+", color: "from-teal-400 to-teal-600", icon: <Compass size={24} /> },
-    { label: "Stories Shared", value: "45K", color: "from-orange-400 to-rose-500", icon: <Heart size={24} /> },
-    { label: "Countries Mapped", value: "195", color: "from-blue-400 to-indigo-600", icon: <StarFill size={24} /> },
-  ];
+    { label: "Active Explorers", value: "10K+", color: "from-teal-400 to-teal-600", icon: <Compass width={24} height={24} /> },
+    { label: "Stories Shared", value: "45K", color: "from-orange-400 to-rose-500", icon: <Heart width={24} height={24} /> },
+    { label: "Countries Mapped", value: "195", color: "from-blue-400 to-indigo-600", icon: <StarFill width={24} height={24} /> },
+];
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-16 space-y-16 overflow-hidden">
       {/* Colorful Hero */}
       <div className="text-center space-y-6 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-teal-500/20 blur-[80px] rounded-full -z-10" />
-        <Chip variant="flat" className="bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400 border-none font-bold">
+        <Chip variant="soft" className="bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400 border-none font-bold">
           Our Journey
         </Chip>
         <h1 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-950 dark:text-zinc-50">

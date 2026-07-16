@@ -113,7 +113,7 @@ export default function SigninPage(): React.JSX.Element {
                         <TextField isRequired name="email" type="email" className="flex flex-col gap-1.5">
                             <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Email Address</Label>
                             <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-teal-600 transition-colors">
-                                <At className="text-zinc-400 pointer-events-none" size={16} />
+                                <At className="text-zinc-400 pointer-events-none" width={16} height={16} />
                                 <Input
                                     placeholder="you@example.com"
                                     value={email}
@@ -127,7 +127,7 @@ export default function SigninPage(): React.JSX.Element {
                         <TextField isRequired name="password" className="flex flex-col gap-1.5">
                             <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Password</Label>
                             <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-teal-600 transition-colors">
-                                <ShieldKeyhole className="text-zinc-400 pointer-events-none" size={16} />
+                                <ShieldKeyhole className="text-zinc-400 pointer-events-none" width={16} height ={16} />
                                 <Input
                                     type={isVisible ? "text" : "password"}
                                     placeholder="Enter your password"
@@ -141,7 +141,7 @@ export default function SigninPage(): React.JSX.Element {
                                     onClick={toggleVisibility}
                                     aria-label="toggle password visibility"
                                 >
-                                    {isVisible ? <EyeSlash size={18} /> : <Eye size={18} />}
+                                    {isVisible ? <EyeSlash width={18} height={18} /> : <Eye width={18} height={18} />}
                                 </button>
                             </InputGroup>
                         </TextField>
@@ -163,7 +163,7 @@ export default function SigninPage(): React.JSX.Element {
                         <div className="flex flex-col gap-2 mt-2">
                             <Button
                                 type="submit"
-                                color="primary"
+                                // color="primary"
                                 className="w-full font-semibold rounded-xl text-sm h-12 bg-teal-600 hover:bg-teal-700 text-white"
                                 isLoading={isLoading}
                                 isDisabled={isLoading}
