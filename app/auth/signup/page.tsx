@@ -8,6 +8,7 @@ import { Eye, EyeSlash, Person, At, ShieldKeyhole, Picture } from "@gravity-ui/i
 import { authClient, signUp } from "@/lib/auth-client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
+import Image from "next/image";
 
 export default function SignupPage(): React.JSX.Element {
     // Form fields
@@ -119,8 +120,15 @@ export default function SignupPage(): React.JSX.Element {
                     <div className="flex flex-col items-center justify-center gap-1 pb-6 border-b border-zinc-100 dark:border-zinc-800 mb-6 text-center">
                         {/* Application Identity Logo Branding */}
                         <Link href="/" className="flex flex-col items-center gap-2 group mb-3">
-                            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-teal to-teal-600 shadow-lg group-hover:scale-105 transition-transform duration-200">
-                                <span className="text-xl font-bold text-white">T</span>
+                            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal-500/10 dark:bg-teal-400/10 border border-teal-500/20 group-hover:scale-105 transition-transform duration-200">
+                                <Image
+                                    alt="Trailwisp Logo"
+                                    src="/trailwisp-logo.png"
+                                    // src="https://fastly.4sqi.net/img/general/600x600/170077684_WurW-saVWWTofqkCCrMb8YKNOocyqgaB34fc9AQrI4Q.png"
+                                    width={35}
+                                    height={35}
+                                    className="object-contain"
+                                />
                             </div>
                             <span className="text-xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
                                 Trail<span className="bg-gradient-to-r from-teal-600 to-orange-500 bg-clip-text text-transparent">wisp</span>

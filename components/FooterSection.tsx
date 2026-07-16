@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export function FooterSection() {
   const currentYear = new Date().getFullYear();
@@ -31,14 +32,25 @@ export function FooterSection() {
           
           {/* Brand Identity Pillar */}
           <div className="lg:col-span-2 flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-2 group w-fit">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-teal-700 shadow-sm shadow-teal-500/20 group-hover:scale-105 transition-transform duration-200">
-                <span className="text-sm font-bold text-white">T</span>
-              </div>
+            <div className="flex items-center justify-start">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal-500/10 dark:bg-teal-400/10 border border-teal-500/20 group-hover:scale-105 transition-transform duration-200">
+              <Image
+                alt="Trailwisp Logo"
+                src="/trailwisp-logo.png"
+                // src="https://fastly.4sqi.net/img/general/600x600/170077684_WurW-saVWWTofqkCCrMb8YKNOocyqgaB34fc9AQrI4Q.png"
+                width={35}
+                height={35}
+                className="object-contain"
+              />
+            </div>
+            <div className="hidden leading-none sm:block">
               <span className="text-lg font-black tracking-tight text-zinc-900 dark:text-zinc-50">
-                Trail<span className="bg-gradient-to-r from-teal-500 to-amber-500 bg-clip-text text-transparent">wisp</span>
+                Trail<span className="bg-gradient-to-r from-teal-600 to-orange-500 bg-clip-text text-transparent">wisp</span>
               </span>
-            </Link>
+            </div>
+          </Link>
+        </div>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-xs leading-relaxed">
               A modern travel chronicle platform built for authentic travelers to map, share, and archive their unvarnished journeys worldwide.
             </p>

@@ -6,6 +6,7 @@ import { Eye, EyeSlash, At, ShieldKeyhole } from "@gravity-ui/icons";
 import { authClient, signIn } from "@/lib/auth-client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
+import Image from "next/image";
 
 export default function SigninPage(): React.JSX.Element {
     // Form fields
@@ -93,8 +94,15 @@ export default function SigninPage(): React.JSX.Element {
                     <div className="flex flex-col items-center justify-center gap-1 pb-6 border-b border-zinc-100 dark:border-zinc-800 mb-6 text-center">
                         <Link href="/" className="flex flex-col items-center gap-2 group mb-3">
                             {/* Logo Visual Icon - Trailwisp Deep Teal to Sunset Orange */}
-                            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-600 to-orange-500 shadow-lg group-hover:scale-105 transition-transform duration-200">
-                                <span className="text-xl font-bold text-white">T</span>
+                            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal-500/10 dark:bg-teal-400/10 border border-teal-500/20 group-hover:scale-105 transition-transform duration-200">
+                                <Image
+                                    alt="Trailwisp Logo"
+                                    src="/trailwisp-logo.png"
+                                    // src="https://fastly.4sqi.net/img/general/600x600/170077684_WurW-saVWWTofqkCCrMb8YKNOocyqgaB34fc9AQrI4Q.png"
+                                    width={35}
+                                    height={35}
+                                    className="object-contain"
+                                />
                             </div>
                             {/* Brand Name Text */}
                             <span className="text-xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
@@ -127,7 +135,7 @@ export default function SigninPage(): React.JSX.Element {
                         <TextField isRequired name="password" className="flex flex-col gap-1.5">
                             <Label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Password</Label>
                             <InputGroup className="flex items-center gap-2 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 bg-zinc-50 dark:bg-zinc-900 focus-within:border-teal-600 transition-colors">
-                                <ShieldKeyhole className="text-zinc-400 pointer-events-none" width={16} height ={16} />
+                                <ShieldKeyhole className="text-zinc-400 pointer-events-none" width={16} height={16} />
                                 <Input
                                     type={isVisible ? "text" : "password"}
                                     placeholder="Enter your password"

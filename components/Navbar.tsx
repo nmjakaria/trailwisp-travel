@@ -67,8 +67,8 @@ export default function Navbar(): React.JSX.Element {
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-teal-500/10 dark:bg-teal-400/10 border border-teal-500/20 group-hover:scale-105 transition-transform duration-200">
               <Image
                 alt="Trailwisp Logo"
-                // src="/trailwisp_logo.png"
-                src="https://fastly.4sqi.net/img/general/600x600/170077684_WurW-saVWWTofqkCCrMb8YKNOocyqgaB34fc9AQrI4Q.png"
+                src="/trailwisp-logo.png"
+                // src="https://fastly.4sqi.net/img/general/600x600/170077684_WurW-saVWWTofqkCCrMb8YKNOocyqgaB34fc9AQrI4Q.png"
                 width={35}
                 height={35}
                 className="object-contain"
