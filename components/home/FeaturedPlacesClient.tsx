@@ -187,7 +187,7 @@ export default function FeaturedPlacesClient({ initialPlaces }: FeaturedPlacesCl
                         ৳{place.price.toLocaleString()}
                       </span>
                       <span className="text-muted-foreground text-[10px] font-bold uppercase ml-0.5">
-                        / total
+                        / Person
                       </span>
                     </div>
                     <span className="text-[9px] font-medium text-muted-foreground">

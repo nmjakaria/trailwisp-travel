@@ -68,7 +68,6 @@ export default function Navbar(): React.JSX.Element {
               <Image
                 alt="Trailwisp Logo"
                 src="/trailwisp-logo.png"
-                // src="https://fastly.4sqi.net/img/general/600x600/170077684_WurW-saVWWTofqkCCrMb8YKNOocyqgaB34fc9AQrI4Q.png"
                 width={35}
                 height={35}
                 className="object-contain"
